@@ -23,7 +23,7 @@ app.use((req,res,next)=>{
 app.use(express.static("public"));
 app.use(express.static("css"));
 
-app.get("/index",(request,response)=>{
+app.get("/",(request,response)=>{
     response.sendFile(`${__dirname}/views/index.html`);
 });
 //GET Request for ex1
@@ -53,9 +53,19 @@ app.post("/api/countries",jsonParser,(request,response)=>{
 
 //GET Request for ex3
 app.get("/api/articles",(request,response)=>{
-    
-})
+    response.sendFile(`${__dirname}/views/ex3.html`);
+});
 
+//POST Request for ex3
+app.post("/api/articles",upload.array(),(request,response)=>{
+    const article_array=[];
+    const title=request.body.title;
+    const content=request.body.content;
+
+    article_array.push({id,title,content});
+    response.send(`New article added successfully with title "${title} and ID ${id}`);
+    
+});
 const listener=app.listen(process.env.PORT||3000,()=>{
     console.log(`Your app is listening on port ${listener.address().port}`);
 });
